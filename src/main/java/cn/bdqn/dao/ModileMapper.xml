@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.dao.ModileMapper">
+    <resultMap id="modileList" type="modile">
+        <id property="id" column="id"/>
+        <result property="pas.paId" column="paId"/>
+        <result property="pas.name" column="name"/>
+        <result property="pas.talkTime" column="talkTime"/>
+        <result property="pas.flow" column="flow"/>
+        <result property="pas.smsCount" column="smsCount"/>
+        <result property="pas.price" column="price"/>
+    </resultMap>
+    <select id="getModileList" resultMap="modileList">
+        select m.*,p.* from modilecrad m inner join package p on m.paId = p.paId;
+    </select>
+
+    <select id="getModileByUserName" resultType="modile">
+        select * from modilecrad where userName=#{userName};
+    </select>
+
+    <select id="getModileByCardNumber" resultMap="modileList">
+        select m.*,p.* from modilecrad m inner join package p on m.paId = p.paId where m.cardNumber=#{cardNumber};
+    </select>
+
+    <insert id="addModile" parameterType="modile">
+        insert into modilecrad (cardNumber, userName, passWord, paId, sonsumAmount, money, realTalkTime, realSMSCount, realFlow)
+        values (#{cardNumber},#{userName},#{passWord},#{pas.paId},#{sonsumAmount},#{money},#{realTalkTime},#{realSMSCount},#{realFlow});
+    </insert>
+
+    <update id="updMoney">
+        update modilecrad
+        <trim prefix="set" suffixOverrides=",">
+            <if test="money!=null and money!=''">money=#{money}</if>
+        </trim>
+        where  cardNumber=#{cardNumber}
+    </update>
+
+    <update id="updModilePas">
+        update modilecrad
+        <trim prefix="set" suffixOverrides=",">
+            <if test="paId!=null">paId=#{paId}</if>
+        </trim>
+        where id=#{id};
+    </update>
+
+    <delete id="delModile">
+        delete from modilecrad where id=#{id};
+    </delete>
+
+    <update id="updModile" parameterType="modile">
+        update modilecrad
+        <trim prefix="set" suffixOverrides=",">
+            <if test="money!=null and money!=0">money=#{money},</if>
+            <if test="sonsumAmount!=null and sonsumAmount!=0">sonsumAmount=#{sonsumAmount},</if>
+            <if test="realTalkTime!=null and realTalkTime!=0">realTalkTime=#{realTalkTime},</if>
+            <if test="realSMSCount!=null and realSMSCount!=0">realSMSCount=#{realSMSCount},</if>
+            <if test="realFlow!=null and realFlow!=0">realFlow=#{realFlow}</if>
+        </trim>
+        where cardNumber=#{cardNumber}
+    </update>
+</mapper>
