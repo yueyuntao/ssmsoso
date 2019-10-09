@@ -22,7 +22,8 @@
                                                            placeholder="请输入密码"/>
                 <div class="form-inline" style="margin-top: 10px;">
                     <button class="btn btn-success" style="width: 11%;" type="submit">登录</button>
-                    <button class="btn btn-danger"style="width: 11%"  onclick="window.location.href='/index.html'">返回</button>
+                    <button class="btn btn-danger" style="width: 11%" onclick="window.location.href='/index.html'">返回
+                    </button>
                 </div>
                 <br>
                 <p><a href="/userLogin.html">没有注册吗？点击注册！！！</a></p>
@@ -52,7 +53,8 @@
                 return false;
             }
             $.get("/doLogin", {cardNumber: cardNumber, passWord: passWord}, function (result) {
-                if ("erorrs"==result){
+                //alert(111);
+                if ("erorrs" == result) {
                     alert("用户名或密码错误！！！");
                     return false;
                 }

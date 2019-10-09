@@ -15,7 +15,8 @@
     <div class="row">
         <h1 style="color: ${modile!=null?'red':null}">Hello:${modile.userName}</h1>
         <div class="row col-md-12 col-xs-12">
-            <p align="center"><h2 class="text-center">欢迎使用搜搜移动业务大厅</h2></p>
+            <p align="center">
+            <h2 class="text-center">欢迎使用搜搜移动业务大厅</h2></p>
         </div>
         <div class="list-group col-md-1 col-xs-12">
             <ul class="input-group text-center">
@@ -43,7 +44,9 @@
             <table class="table text-center" align="center">
                 <tr align="center">
                     <th colspan="10" align="center"><h2 class="text-center"><a href="/showUser.html">用户信息</a></h2></th>
-                    <th colspan="10"  align="right"><input class="btn btn-success"  style="width: 100%" type="button" onclick="window.location.href='/index.html' " value="刷新页面"></th>
+                    <th colspan="10" align="right"><input class="btn btn-success" style="width: 100%" type="button"
+                                                          onclick="window.location.href='/index.html' " value="刷新页面">
+                    </th>
                 </tr>
                 <tr align="center">
                     <th>编号</th>
@@ -58,7 +61,7 @@
                     <th>已使用流量</th>
                 </tr>
                 <c:forEach var="li" items="${lists}">
-                    <tr align="center"  class="form-inline">
+                    <tr align="center" class="form-inline">
                         <td>${li.id}</td>
                         <td>${li.cardNumber}</td>
                         <td>${li.userName}</td>
@@ -83,15 +86,32 @@
 <script src="/statics/js/jquery-1.12.4.js"></script>
 <script src="/statics/js/bootstrap.js"></script>
 <script type="text/javascript">
+    $(function () {
+        setInterval("setInter()", 1000);
+    });
+
+    function setInter() {
+        var indeed = ["yellow", "red", "blue", "green", "#c0be00", "fuchsia", "aqua", "#dce7ff", "orange", "#70f500"];
+        var number1 = Math.random() + "";
+        var number2 = Math.random() + "";
+
+        var s1 = number1.substring(2, 3);
+        var s2 = number2.substring(2, 3);
+        $("tr:odd").css("background", indeed[s1]);
+        $("td:even").css("background", indeed[s2]);
+
+        //$("tr:even").css("background", indeed[s2]);
+    }
+
     function sysClose() {
-        if (confirm("确定退出嘛？")){
-            $.get("/exitSystem",null,function (result) {
-                if (result>0) {
+        if (confirm("确定退出嘛？")) {
+            $.get("/exitSystem", null, function (result) {
+                if (result > 0) {
                     window.opener;
-                    window.open('',"_self");
+                    window.open('', "_self");
                     window.close();
                 }
-            },"JSON");
+            }, "JSON");
 
         }
     }

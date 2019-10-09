@@ -39,7 +39,6 @@ public class ModileController {
     @RequestMapping("/showSoso.html")
     public String showSoso(HttpSession session) {
         if (session.getAttribute("modile") == null) {
-
             return "login";
         }
         return "showSoso";
